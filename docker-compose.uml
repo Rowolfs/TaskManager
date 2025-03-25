@@ -1,0 +1,20 @@
+version: '3'
+services:
+  backend:
+    build: .  # путь к Dockerfile вашего бекенда
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=host.docker.internal
+    extra_hosts:
+      - "host.docker.internal:host-gateway"  # автоматический резолвинг IP хоста
+
+  db:
+    image: postgres
+    environment:
+     - DB_USER=${DB_USER}
+     - DB_HOST=${DB_HOST}
+     - DB_NAME=${DB_NAME}
+     
+    ports:
+      - DB_PORT={DB_PORT}
