@@ -45,10 +45,15 @@ app.put('/tasks/:id', async (req, res) => {
         const {title} = req.body
         const {description} = req.body
         const { completed } = req.body;
+        const taskId = parseInt(id, 10); 
+
+        if (isNaN(taskId)) {
+            return res.status(400).json({ error: 'Некорректный ID' });
+        }
 
         const result = await pool.query(
             'UPDATE tasks SET title = $1, description = $2, completed = $3 WHERE id = $4 RETURNING *',
-            [title,description,completed, id]
+            [title,description,completed, taskId]
         );
 
         if (result.rows.length === 0) {
