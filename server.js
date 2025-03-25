@@ -42,11 +42,13 @@ app.post('/tasks', async (req, res) => {
 app.put('/tasks/:id', async (req, res) => {
     try {
         const { id } = req.params;
+        const {title} = req.body
+        const {description} = req.body
         const { completed } = req.body;
 
         const result = await pool.query(
-            'UPDATE tasks SET completed = $1 WHERE id = $2 RETURNING *',
-            [completed, id]
+            'UPDATE tasks SET title = $1 description = $2 completed = $3  WHERE id = $4 RETURNING *',
+            [title,description,completed, id]
         );
 
         if (result.rows.length === 0) {
