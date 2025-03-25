@@ -5,7 +5,7 @@ require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
+const os = require('os');
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -71,7 +71,24 @@ app.delete('/tasks/:id', async (req, res) => {
     }
 });
 
+function getLocalIP() {
+    const interfaces = os.networkInterfaces();
+    for (const name of Object.keys(interfaces)) {
+      for (const iface of interfaces[name]) {
+        // Ищем IPv4, который не является внутренним (не 127.0.0.1)
+        if(iface.address === '172.21.80.87'){
+            return 'localhost';
+        }
+        if (iface.family === 'IPv4' && !iface.internal) {
+          return iface.address;
+        }
+      }
+    }
+    
+    return 'localhost';
+  }
+
 // Запуск сервера
 app.listen(PORT,'0.0.0.0', () => {
-    console.log(`✅ Сервер запущен на http://89.169.13.184:${PORT}`);
+    console.log(`✅ Сервер запущен на http://${getLocalIP()}:${PORT}`);
 });
