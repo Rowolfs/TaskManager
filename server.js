@@ -26,6 +26,7 @@ app.get('/tasks', async (req, res) => {
 app.post('/tasks', async (req, res) => {
     try {
         const { title, description } = req.body;
+        console.log(req.body);
         const result = await pool.query(
             'INSERT INTO tasks (title, description, completed) VALUES ($1, $2, false) RETURNING *',
             [title, description]
