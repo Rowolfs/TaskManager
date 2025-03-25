@@ -17,4 +17,4 @@ services:
      - DB_NAME=${DB_NAME}
      
     ports:
-      - DB_PORT={DB_PORT}
+      - DB_PORT=${DB_PORT}
