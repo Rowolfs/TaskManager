@@ -9,23 +9,6 @@ const pool = new Pool({
   port: process.env.DB_PORT,
 });
 
-async function createTableIfNotExists() {
-  const createTableQuery = `
-    CREATE TABLE IF NOT EXISTS your_table_name (
-      id SERIAL PRIMARY KEY,
-      name VARCHAR(100),
-      description TEXT
-    );
-  `;
 
-  try {
-    await pool.query(createTableQuery);
-    console.log('Table created or already exists.');
-  } catch (err) {
-    console.error('Error creating table:', err.stack);
-  }
-}
-
-createTableIfNotExists();
 
 module.exports = pool;
