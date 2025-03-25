@@ -27,6 +27,7 @@ app.get('/tasks/:id', async (req, res) => {
     try {
         const {id} = req.params;
         const taskId = parseInt(id, 10); 
+        console.log(taskId)
         const result = await pool.query('SELECT * FROM tasks WHERE id = $1',[taskId]);
         res.json(result.rows);
     } catch (error) {
