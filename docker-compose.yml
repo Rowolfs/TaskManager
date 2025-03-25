@@ -1,20 +1,26 @@
 version: '3'
 services:
   backend:
-    build: .  # путь к Dockerfile вашего бекенда
+    build: .
     ports:
       - "3000:3000"
     environment:
-      - DB_HOST=host.docker.internal
-    extra_hosts:
-      - "host.docker.internal:host-gateway"  # автоматический резолвинг IP хоста
+      - DB_HOST=db  # Подключаемся к контейнеру с БД по имени сервиса
+      - DB_USER=${DB_USER}
+      - DB_NAME=${DB_NAME}
+      - DB_PORT=5432  # Порт внутри сети Docker (не меняется)
+    depends_on:
+      - db  # Запускать после БД
 
   db:
     image: postgres
     environment:
-     - DB_USER=${DB_USER}
-     - DB_HOST=${DB_HOST}
-     - DB_NAME=${DB_NAME}
-     
+      - POSTGRES_USER=${DB_USER}        # Правильные переменные для PostgreSQL
+      - POSTGRES_DB=${DB_NAME}
     ports:
-      - DB_PORT=${DB_PORT}
+      - "${DB_PORT}:5432"  # Пробрасываем порт из .env на хост (например, 5432:5432)
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Сохраняем данные БД
+
+volumes:
+  postgres_data:  # Именованный том для данных PostgreSQL
