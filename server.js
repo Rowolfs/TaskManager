@@ -72,6 +72,6 @@ app.delete('/tasks/:id', async (req, res) => {
 });
 
 // Запуск сервера
-app.listen(PORT, () => {
+app.listen(PORT,'0.0.0.0', () => {
     console.log(`✅ Сервер запущен на http://89.169.13.184:${PORT}`);
 });
