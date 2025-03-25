@@ -90,5 +90,5 @@ function getLocalIP() {
 
 // Запуск сервера
 app.listen(PORT,'0.0.0.0', () => {
-    console.log(`✅ Сервер запущен на http://${getLocalIP()}:${PORT}`);
+    console.log(`✅ Сервер запущен на http://$89.169.13.184:${PORT}`);
 });
